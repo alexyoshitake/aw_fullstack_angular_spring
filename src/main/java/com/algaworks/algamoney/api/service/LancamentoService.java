@@ -29,4 +29,9 @@ public class LancamentoService {
 
 		return lancamento.get();
 	}
+
+	public Lancamento cadastrar(Lancamento lancamento) {
+		lancamento.setCodigo(null);
+		return lancamentoRepository.save(lancamento);
+	}
 }
