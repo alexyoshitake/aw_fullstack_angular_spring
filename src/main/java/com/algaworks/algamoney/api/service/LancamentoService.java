@@ -47,4 +47,9 @@ public class LancamentoService {
 		lancamento.setCodigo(null);
 		return lancamentoRepository.save(lancamento);
 	}
+
+	public void remover(Long codigo) {
+		Lancamento lancamento = this.buscar(codigo);
+		lancamentoRepository.delete(lancamento);
+	}
 }
