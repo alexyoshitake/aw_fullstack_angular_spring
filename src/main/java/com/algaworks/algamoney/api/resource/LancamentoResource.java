@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.algaworks.algamoney.api.event.RecursoCriadoEvent;
 import com.algaworks.algamoney.api.model.Lancamento;
+import com.algaworks.algamoney.api.repository.filter.LancamentoFilter;
 import com.algaworks.algamoney.api.service.LancamentoService;
 
 @Controller
@@ -31,8 +32,8 @@ public class LancamentoResource {
 	private ApplicationEventPublisher publisher;
 
 	@GetMapping
-	public ResponseEntity<List<Lancamento>> listar() {
-		return ResponseEntity.ok(lancamentoService.listar());
+	public ResponseEntity<List<Lancamento>> pesquisar(LancamentoFilter filtro) {
+		return ResponseEntity.ok(lancamentoService.pesquisar(filtro));
 	}
 
 	@GetMapping("/{codigo}")
