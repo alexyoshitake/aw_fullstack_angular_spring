@@ -13,6 +13,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import javax.validation.constraints.NotNull;
 
 @Entity
 @Table(name = "lancamento")
@@ -22,25 +23,31 @@ public class Lancamento {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long codigo;
 
+	@NotNull(message = "Descricao é obrigatório")
 	private String descricao;
 
+	@NotNull(message = "Data de Vencimento é obrigatório")
 	@Column(name = "data_vencimento")
 	private LocalDate dataVencimento;
 
 	@Column(name = "data_pagamento")
 	private LocalDate dataPagamento;
 
+	@NotNull(message = "Valor é obrigatório")
 	private BigDecimal valor;
 
 	private String observacao;
 
+	@NotNull(message = "Tipo é obrigatório")
 	@Enumerated(EnumType.STRING)
 	private TipoLancamento tipo;
 
+	@NotNull(message = "Categoria é obrigatória")
 	@ManyToOne
 	@JoinColumn(name = "codigo_categoria")
 	private Categoria categoria;
 
+	@NotNull(message = "Pessoa é obrigatória")
 	@ManyToOne
 	@JoinColumn(name = "codigo_pessoa")
 	private Pessoa pessoa;
