@@ -1,12 +1,12 @@
 package com.algaworks.algamoney.api.resource;
 
-import java.util.List;
-
 import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationEventPublisher;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -34,8 +34,8 @@ public class LancamentoResource {
 	private ApplicationEventPublisher publisher;
 
 	@GetMapping
-	public ResponseEntity<List<Lancamento>> pesquisar(LancamentoFilter filtro) {
-		return ResponseEntity.ok(lancamentoService.pesquisar(filtro));
+	public ResponseEntity<Page<Lancamento>> pesquisar(LancamentoFilter filtro, Pageable pageable) {
+		return ResponseEntity.ok(lancamentoService.pesquisar(filtro, pageable));
 	}
 
 	@GetMapping("/{codigo}")
