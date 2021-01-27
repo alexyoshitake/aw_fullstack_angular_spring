@@ -14,6 +14,7 @@ import com.algaworks.algamoney.api.model.Pessoa;
 import com.algaworks.algamoney.api.repository.LancamentoRepository;
 import com.algaworks.algamoney.api.repository.PessoaRepository;
 import com.algaworks.algamoney.api.repository.filter.LancamentoFilter;
+import com.algaworks.algamoney.api.repository.projection.ResumoLancamento;
 
 @Service
 public class LancamentoService {
@@ -26,6 +27,10 @@ public class LancamentoService {
 
 	public Page<Lancamento> pesquisar(LancamentoFilter filtro, Pageable pageable) {
 		return lancamentoRepository.filtrar(filtro, pageable);
+	}
+
+	public Page<ResumoLancamento> resumir(LancamentoFilter filtro, Pageable pageable) {
+		return lancamentoRepository.resumir(filtro, pageable);
 	}
 
 	public Lancamento buscar(Long codigo) {

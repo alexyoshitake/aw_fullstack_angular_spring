@@ -22,6 +22,7 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import com.algaworks.algamoney.api.event.RecursoCriadoEvent;
 import com.algaworks.algamoney.api.model.Lancamento;
 import com.algaworks.algamoney.api.repository.filter.LancamentoFilter;
+import com.algaworks.algamoney.api.repository.projection.ResumoLancamento;
 import com.algaworks.algamoney.api.service.LancamentoService;
 
 @Controller
@@ -38,6 +39,12 @@ public class LancamentoResource {
 	@PreAuthorize("hasAuthority('ROLE_PESQUISAR_LANCAMENTO') and #oauth2.hasScope('read')")
 	public ResponseEntity<Page<Lancamento>> pesquisar(LancamentoFilter filtro, Pageable pageable) {
 		return ResponseEntity.ok(lancamentoService.pesquisar(filtro, pageable));
+	}
+
+	@GetMapping(params = "resumo")
+	@PreAuthorize("hasAuthority('ROLE_PESQUISAR_LANCAMENTO') and #oauth2.hasScope('read')")
+	public ResponseEntity<Page<ResumoLancamento>> resumir(LancamentoFilter filtro, Pageable pageable) {
+		return ResponseEntity.ok(lancamentoService.resumir(filtro, pageable));
 	}
 
 	@GetMapping("/{codigo}")
