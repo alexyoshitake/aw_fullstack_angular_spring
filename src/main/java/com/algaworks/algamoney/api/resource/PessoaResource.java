@@ -7,6 +7,8 @@ import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationEventPublisher;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -23,6 +25,7 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import com.algaworks.algamoney.api.event.RecursoCriadoEvent;
 import com.algaworks.algamoney.api.model.Pessoa;
 import com.algaworks.algamoney.api.repository.PessoaRepository;
+import com.algaworks.algamoney.api.repository.filter.PessoaFilter;
 import com.algaworks.algamoney.api.service.PessoaService;
 
 @Controller
@@ -44,6 +47,12 @@ public class PessoaResource {
 		pessoa = pessoaRepository.save(pessoa);
 		publisher.publishEvent(new RecursoCriadoEvent(this, response, pessoa.getCodigo()));
 		return ResponseEntity.status(HttpStatus.CREATED).body(pessoa);
+	}
+
+	@GetMapping
+	@PreAuthorize("hasAuthority('ROLE_PESQUISAR_PESSOA') and #oauth2.hasScope('read')")
+	public ResponseEntity<Page<Pessoa>> pesquisar(PessoaFilter filtro, Pageable pageable) {
+		return ResponseEntity.ok(pessoaRepository.pesquisar(filtro, pageable));
 	}
 
 	@GetMapping("/{codigo}")
